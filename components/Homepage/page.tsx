@@ -10,7 +10,7 @@ const Homepage = (props: Props) => {
     <div className="w-screen min-h-screen dark:bg-dark-extra">
       <Header />
       <CreateDocument />
-      <Documents/>
+      {/* <Documents data={Docs}/> */}
     </div>
   )
 }

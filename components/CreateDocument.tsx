@@ -14,11 +14,39 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 
 type Props = {};
 
 export const CreateDocument = (props: Props) => {
   const [newDocumentName, setNewDocumentName] = useState('');
+
+  const handleCreateDocument = async () => {
+    try {
+      const response = await fetch('/api/add-docs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newDocumentName}),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Document added successfully', data);
+        // Add any additional logic or feedback here
+      } else {
+        console.error('Failed to add document:', response.statusText);
+        // Handle error or provide feedback to the user
+      }
+    } catch (error) {
+      console.error('Error adding document:', error);
+    }
+  };
 
   return (
     <section className="bg-[#F1F3F4] dark:bg-dark-mid dark:text-gray-200 pb-10 px-5 w-full">
@@ -65,7 +93,7 @@ export const CreateDocument = (props: Props) => {
                     Close
                   </Button>
                 </DialogClose>
-                <Button type="button" className='bg-blue-600'>
+                <Button type="button" className='bg-blue-600' onClick={handleCreateDocument}>
                   Create
                 </Button>
               </DialogFooter>
